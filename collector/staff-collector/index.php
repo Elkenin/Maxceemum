@@ -1,0 +1,492 @@
+<?php
+session_start();
+include "../../connections/database.php";  
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) 
+{
+	header('Location: ../../logout.php');
+	exit;
+}
+    if(isset($_SESSION["loggedin"]))
+    {
+        if((time() - $_SESSION["last_login_time"]) > 30000)
+        {
+            header('location: ../../logout.php');
+        }
+		    else 
+        {
+            $_SESSION['last_login_time'] = time();
+    		}
+    }
+    $yusername = $_SESSION['username'];
+    $getuser = mysqli_query($con,"select * from accounts where username = '$yusername'");
+    $user = mysqli_fetch_array($getuser);
+    // assigning variable to show
+    $authority = $user['position'];
+    if($authority == "staff")
+    {
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Financial Freedom Plans Inc.</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../collector">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="glyphicon glyphicon-grain"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">COLLECTOR <sup></sup></div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="../../dashboard">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            <!-- Nav Item - Planholder Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="../../planholder">
+                    <i class="fas fa-fw fa-heart"></i>
+                    <span>Planholder</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Collector Collapse Menu -->
+            <li class="nav-item active">
+                <a style="background-color:black;opacity: 0.5;"class="nav-link collapsed" href="../">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Collector</span>
+                </a>
+            </li>
+            
+            <!-- Nav Item - Agents Collapse Menu -->
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../agent">
+                    <i class="fas fa-fw fa-handshake"></i>
+                    <span>Agent</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Payment Collapse Menu -->
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../payment">
+                    <i class="fas fa-fw fa-credit-card"></i>
+                    <span>Payment</span>
+                </a>
+            </li>
+            <!-- Nav Item - Logout Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="../../logout.php">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+                        <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>           
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="../dashboard/" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle"
+                                    src="../img/undraw_profile.svg">
+                            </a>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Collector`s Information</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Contribution Report</a>
+                    </div>
+
+<!-- Begin of Form -->                  
+ <form>
+
+<section>
+
+<div class="form-row">
+    <div class="form-group col-md-4">
+      <b><label for="mID">Collector ID</label></b>
+         <label class="form-control" id="mID" name="ID">
+        <?php
+        $addzero = 4;
+        $string = "0000";
+        /*<!-- ================= GENERATE NEW ID ================== -->*/
+        $id = str_pad($string + 1, $addzero, 0, STR_PAD_LEFT);
+        $newID = "FFPI-C2".$id;
+        $checkID = mysqli_query($con,"select * from members_information");
+        $check = mysqli_fetch_array($checkID);
+        $userID = $check['member_id'];
+        
+        if($userID != $newID)
+        {
+            echo $newID;
+        }
+        else if($userID == $newID)
+        {
+            /*<!-- ================= ID EXISTED ================== -->*/
+            $id2 = str_pad($id + 1, $addzero, 0, STR_PAD_LEFT);
+            echo $updateID = "FFPI-C2".$id2;
+        }
+        else
+        if($existingID = $userID == $newID || $userID == $newID)
+        foreach($existingID as $id)
+        {
+            /*<!-- ================= LIMIT EXISTED ================== -->*/
+            $id3 = str_pad($id + 1, $addzero++, 0, STR_PAD_LEFT);
+            echo $limitID = "FFPI-C22".$id3;
+        }
+        ?></label></b>
+    </div>
+
+    <div class="form-group col-md-2">
+    <b><label for="cs">Type of Collector</label></b>
+      <select id="tyAgent" name="typeofagent" list="typeofagent" class="form-control">
+      <datalist id="typeofagent">
+          <?php
+          $getstatus = mysqli_query($con,"select * from type_of_agent_list");
+          if($getstatus) 
+          {
+                while($checkstatus = mysqli_fetch_array($getstatus))
+                {
+                  $showall = $checkstatus['LIST'];
+                  echo"<option>$showall</option>";
+                }
+          }
+          ?>
+      </select>
+  </div>
+
+ <div class="form-group col-md-2">
+    <b><label for="branch">Branch</label></b>
+      <select id="branch" class="form-control">
+        <option selected>Choose...</option>
+        <option>...</option>
+      </select>
+  </div>
+
+       <div class="form-group col-md-4">
+     <b><label for="doa">Date of Application</label></b>
+        <input type="date" id="date" name="date" class="form-control">
+   </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-3">
+      <b><label for="inputls">Last Name</label></b>
+         <input type="text" name="lastname" class="form-control" id="inputls">
+    </div>
+
+    <div class="form-group col-md-3">
+      <b><label for="inputfn">First Name</label></b>
+         <input type="text" name="firstname" class="form-control" id="inputfn">
+    </div>
+
+    <div class="form-group col-md-3">
+      <b><label for="inputmn">Middle Name</label></b>
+         <input type="text" name="middlename" class="form-control" id="inputmn">
+    </div>
+
+    <div class="form-group col-md-2">
+      <b><label for="inputmn">Suffix</label></b>
+         <input type="text" name="suffix" class="form-control" id="inputmn">
+    </div>
+</div>
+
+<div class="form-row">
+    
+    <div class="form-group col-md-3">   
+        <b><label for="province">Address</label></b>
+        <input type="text" class="form-control" name="housenumber" id="inputAddress" placeholder="House No./Street">
+    </div>
+    
+    <div class="form-group col-md-2">                  
+                    <b><label for="province">Province</label></b>
+                    <select id="province" class="form-control">
+                    <option>Choose...</option>
+                    <option <? ($temp == $value) ? "SELECTED" : "" ?> ></opton>
+                    </select>
+    </div>
+    
+    <div class="form-group col-md-2">
+                    <b><label for="city">City/Municipality</label></b>
+                    <select id="city" class="form-control">
+                    <option>Choose Province First</option>
+                    </select>
+    </div>
+                   
+    <div class="form-group col-md-3">
+                    <b><label for="barangay">Baranggay</label></b>
+                    <select id="barangay" class="form-control">
+                    <option>Choose Municipality First</option>
+                    </select>
+    </div>
+    <div class="form-group col-md-2">
+                    <b><label for="barangay">Postal/Zip Code</label></b>
+         <input type="text" class="form-control" name="zipcode" id="inputls" placeholder="Postal/Zip Code">
+    </div>
+
+</div>
+
+    <div class="form-row">
+  <div class="form-group col-md-3">
+    <b><label for="hbd">Birthday</label></b>
+      <input type="date" id="hbd" name="date" class="form-control">
+  </div>
+
+    <div class="form-group col-md-2">
+    <b><label for="Age">Age</label></b>
+      <input type="text" class="form-control" id="Age">
+  </div>
+
+ <div class="form-group col-md-3">
+    <b><label for="cs">Civil Status</label></b>
+      <select id="cs" list="civilstatus" name="civilstatus" class="form-control">
+      <datalist id="civilstatus">
+          <?php
+          $getstatus = mysqli_query($con,"select * from civil_status_list");
+          if($getstatus) 
+          {
+                while($checkstatus = mysqli_fetch_array($getstatus))
+                {
+                  $showall = $checkstatus['LIST'];
+                  echo"<option>$showall</option>";
+                }
+          }
+          ?>
+      </select>
+  </div>
+
+  <div class="form-group col-md-3">
+    <b><label for="cs">Gender</label></b>
+    <select id="Gender" name="gender" class="form-control">
+      <datalist id="gender">
+          <?php
+          $getgender = mysqli_query($con,"select * from gender_list");
+          if($getgender) 
+          {
+                while($checkgender = mysqli_fetch_array($getgender))
+                {
+                  $showall = $checkgender['LIST'];
+                  echo"<option>$showall</option>";
+                }
+          }
+          ?>
+      </select>
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-4">
+    <b><label for="cn">Contact No.</label></b>
+      <input type="text" class="form-control" id="cn">
+  </div>
+
+ <div class="form-group col-md-4">
+    <b><label for="Email">Email</label></b>
+      <input type="text" class="form-control" id="Email">
+   </div>
+</div>
+
+
+<div class="form-row">
+   <div class="form-group col-md-4">
+     <b><label for="cover">Areas that you can cover:</label></b>
+     <div class="textarea">
+       <textarea class="form-control" id="N" rows="3" cols="6" placeholder="Type here"></textarea>
+     </div>
+  </div>
+</section><br>
+
+<section class="text-center">
+  <button class="btn btn-primary" type="Reset">Reset</button>
+  <button class="btn btn-primary" type="Submit">Submit</button>
+</section>
+</form>
+</div>   
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; FFPI Company</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+    <!-- Bootstrap core JavaScript-->
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../../js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="../../vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="../../js/demo/chart-area-demo.js"></script>
+    <script src="../../js/demo/chart-pie-demo.js"></script>
+<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+
+        <!-- script type="text/javascript" src="../../jquery.ph-locations.js"></script -->
+        <script type="text/javascript" src="https://f001.backblazeb2.com/file/buonzz-assets/jquery.ph-locations.js"></script -->
+        <script type="text/javascript">
+            
+            var my_handlers = {
+
+
+                fill_cities: function(){
+
+                    var province_code = $(this).val();
+                    $('#city').ph_locations( 'fetch_list', [{"province_code": province_code}]);
+                },
+
+
+                fill_barangays: function(){
+
+                    var city_code = $(this).val();
+                    $('#barangay').ph_locations('fetch_list', [{"city_code": city_code}]);
+                }
+            };
+
+            $(function(){
+             
+                $('#province').on('change', my_handlers.fill_cities);
+                $('#city').on('change', my_handlers.fill_barangays);
+
+               
+                $('#province').ph_locations({'location_type': 'provinces'});
+                $('#city').ph_locations({'location_type': 'cities'});
+                $('#barangay').ph_locations({'location_type': 'barangays'});
+
+                $('#province').ph_locations('fetch_list');
+            });
+        </script>
+</body>
+</html>
+<?php
+    }
+
+    else
+    header('location: ../../logout.php');
+?>

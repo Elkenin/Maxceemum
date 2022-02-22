@@ -1,0 +1,288 @@
+$(document).ready(function() {
+	
+	
+	$('.btn_delete_row_attachment_content_for_client').click(function(){
+			$('.table_attachment_content:last').remove();
+	});
+
+	$(".btn_add_row_attachment_content_for_client").click(function(){
+		next_item_no =$('#table_attachment_content tbody tr').length;
+		// console.log(next_item_no);
+
+		// next_item_no = $('.attachment_content:last input:first').attr('name');
+		// next_item_no =$('#attachment_content tbody tr').lenght;
+
+		// console.log(next_item_no);
+		// if (typeof next_item_no === "undefined") {
+			// next_item_no = 0;
+		// }else{
+			// next_item_no = next_item_no.replace('data[ClientItem][','');
+			// next_item_no = next_item_no.replace('][id]','');
+			
+		// }
+		
+		$('#table_attachment_content tbody').append
+		('<tr class="table_attachment_content" id="attachment_content_row_'+ next_item_no +'">'+
+		'<td class="col-md-2"><select name="data[ClientItem]['+ next_item_no +'][brand_id]" data-row="'+ next_item_no +'" class="form-control brand_list chosen-select" template="list" placeholder="" id="ClientItem'+ next_item_no +'BrandId" position:absolute; clip:rect(0,0,0,0)" tabindex="-1"></td>'+
+		'<td class="col-md-2"><select name="data[ClientItem]['+ next_item_no +'][printer_copier_id]" data-row="'+ next_item_no +'" class="form-control printer_copier_list chosen-select" template="list" placeholder="" id="ClientItem'+ next_item_no +'PrinterCopierId" position:absolute; clip:rect(0,0,0,0)" tabindex="-1"></td>'+
+		'<td class="col-md-7 "><input name="data[ClientItem]['+ next_item_no +'][compatibles]" data-row="'+ next_item_no +'" class="form-control surname" placeholder="Compatibles" maxlength="100" type="text" id="ClientItem'+ next_item_no +'Compatibles"></td><td class="col-md-1 text-center" onclick="$(\'#attachment_content_row_'+ next_item_no +'\').remove();"><button class="btn btn-m btn-primary"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+		
+		
+		// console.log(next_item_no);
+		
+		
+		
+		
+	});
+	
+	// $('select:not(.not-a-chosen-js-list)').chosen({allow_single_deselect: true});
+	$('form').preventDoubleSubmission();
+	$('textarea[readonly]').css("background-color", "white"); 
+	
+	$('.datepicker').datepicker({
+		todayBtn: "linked",
+		keyboardNavigation: false,
+		forceParse: false,
+		calendarWeeks: false,
+		autoclose: true,
+		clearBtn: true,
+		format: "mm/dd/yyyy"
+	}).blur(function(){
+        val = $(this).val();
+        val1 = Date.parse(val);
+        if (isNaN(val1)==true && val!==''){
+           alert("Invalid date format. Please use mm/dd/yyyy format");
+		   $(this).val('');
+        }
+        else{
+        }
+    }).attr('readonly','readonly').attr("style", "background-color:white");
+	
+	// $('.datepicker').mask('00/00/0000', {placeholder: "__/__/____"});
+	$('#birthday').change(function() {
+		
+		var bday = $(this).val();
+		var today = new Date();
+		var olday = new Date(bday);
+		var age = dateDiff(olday, today)
+		
+		$('#age').val(age);
+	});
+	
+	// $('input.clockpicker').timepicker({
+		// dropdown: false,
+		// scrollbar: false
+	// });
+	
+	//SELECT 2
+	
+		try{
+			$.fn.chosen = function(options) {
+			  var select = $(this).select2({ dropdownPosition: 'below'});
+			  return select;
+			}
+			$('select[prevent-chosen!="1"]').chosen({allow_single_deselect: true});
+		}catch(e){
+			
+		}
+		
+	//SELECT 2 END
+	$('.clockpicker').attr('autocomplete', "off");
+	
+	// $(window).load(function () {
+		// $('.navbar-default').removeAttr('style');	
+	// });
+	
+	// DYNAMIC LIST HOOK
+	$('.dynamic-modal-creation').each(function(){
+		var this_id = $(this).attr('id');
+		var parent_dropdown_id = $(this).parent().prev().children().attr('id');
+		var fetch_url = window.location.origin + $(this).attr('fetch-url-reference');
+		
+		$('#'+ this_id +'_modal_body').html('<iframe src="'+ $(this).attr('url-reference') +'?no-layout=1" style="border:none;min-height:270px;width:100%;"></iframe>');
+		
+		$('#'+ this_id +'_modal').on('hidden.bs.modal', function () {
+			refresh_list(this_id, parent_dropdown_id);
+		});
+	});
+	// DYNAMIC LIST HOOK
+	
+});
+
+jQuery.fn.preventDoubleSubmission = function() {
+  $(this).on('submit',function(e){
+	var $form = $(this);
+	if($(this).attr('exclude')!=='true'){
+		console.log($form.data('submitted') + ' prevention');
+		if ($form.data('submitted') === true) {
+		  // Previously submitted - don't submit again
+		  e.preventDefault();
+		} else {
+		  // Mark it so that the next submit can be ignored
+			if ($form.data('submitted') === 'prevented'){
+				$form.data('submitted', false);
+			}else{
+				$form.data('submitted', true);
+			}
+		}
+	}
+  });
+
+  // Keep chainability
+  return this;
+};
+
+function sweet_alert(title="",text="",type="warning") {
+	 swal({
+			title: title,
+			text: text,
+			type: type
+	});
+}
+
+function sweet_confirm(title="",text="",type="warning",confirmButtonText="Yes",callback=null) {
+	var btn_yes = "Yes";
+	var btn_no = "No";
+	if(type=="warning")	btn_color= "#DD6B55"
+	else if(type=="info") btn_color= "#8cd4f5";
+	else btn_color= "#58a5d8";
+	if($.isArray(confirmButtonText)){
+		if(confirmButtonText.length>1){
+			btn_yes = confirmButtonText[0];
+			btn_no = confirmButtonText[1];
+		}
+	}
+	
+	swal({
+			title: title,
+			text: text,
+			type: type,
+			showCancelButton: true, 
+			confirmButtonText: btn_yes,
+			cancelButtonText: btn_no,
+			confirmButtonColor: btn_color,
+			closeOnConfirm: true
+		}, function (isConfirm) {
+					if (isConfirm) {
+						callback();
+					}
+				}						
+	);
+}
+
+function refresh_list(this_id, parent_dropdown_id, ) {
+	var fetch_url = window.location.origin + $('#' + this_id).attr('fetch-url-reference');
+
+	var previous_value = $('#'+ parent_dropdown_id).val();
+	var select_this_value = previous_value;
+	
+	$('#'+ parent_dropdown_id).html('');
+	
+	$.getJSON(fetch_url, function(result){
+		$('#'+ parent_dropdown_id).prepend('<option> (Choose One) </option>');
+		$.each(result, function(key, string_value){
+			if(key != select_this_value) {
+				$('#'+ parent_dropdown_id).append('<option value="'+ key +'">'+ string_value +'</option>');
+			}
+			else {
+				$('#'+ parent_dropdown_id).append('<option value="'+ key +'" selected="selected">'+ string_value +'</option>');
+			}
+		});
+	});
+}
+
+function show_toast(notification_type,duration=15000,title='',description='',redirect_url,position,icon){
+	toastr.options.closeButton =true;
+	toastr.options.progressBar =true;
+	toastr.options.preventDuplicates =false;
+	toastr.options.timeOut =duration;
+	toastr.options.extendedTimeOut =1000;
+	toastr.options.positionClass ='toast-' + position;
+	
+	
+	if (redirect_url){
+		toastr.options.onclick = function () {
+			location.href = redirect_url;
+		};
+	}
+	
+	
+
+	if(title){
+		toastr[notification_type](description,title);
+	}else{
+		toastr[notification_type](description);
+	}
+	
+	if (icon){
+		icon='\\' + icon;
+		if ($('#toast_style_container').length >= 1){
+			$('#toast_style_container').html('<style> #toast-container > .toast-success:before { content: "' + icon + '"} #toast-container > .toast-info:before { content: "' + icon + '"} #toast-container > .toast-warning:before { content: "' + icon + '"} #toast-container > .toast-error:before { content: "' + icon + '"} </style>');
+		}else{
+			$('.toast').append('<div id="toast_style_container"><style> #toast-container > .toast-success:before { content: "' + icon + '"} #toast-container > .toast-info:before { content: "' + icon + '"} #toast-container > .toast-warning:before { content: "' + icon + '"} #toast-container > .toast-error:before { content: "' + icon + '"} </style></div>');
+		}
+		
+	}
+
+}
+
+function insert_list(list_from, list_to) {
+	$(list_to).empty();
+	$(list_from).each(function(){
+		var val = $(this).val();
+		var txt = $(this).html();
+		$(list_to).append(
+			$('<option></option>').val(val).html(txt)
+		);
+	});
+	$(list_to).val("");
+}
+
+function dateDiff(dateold,datenew) {
+	var ynew = datenew.getFullYear();
+	var mnew = datenew.getMonth();
+	var dnew = datenew.getDate();
+	var yold = dateold.getFullYear();
+	var mold = dateold.getMonth();
+	var dold = dateold.getDate();
+	var diff = ynew - yold;
+	if(mold > mnew) diff--;
+	else
+	{
+		if(mold == mnew)
+		{
+			if(dold > dnew) diff--;
+		}
+	}
+	return diff;
+}
+
+function htmlspecialchars(text) {
+  var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+ 
+	if (text == null) {
+		return '';
+	}
+	
+	return text.replace(/[&<>"']/g, function(m) { 
+		return map[m]; 
+	});
+}
+
+function htmlspecialchars_decode(text) {
+  var map = {
+    '&amp;' : '&',
+    '&lt;' : '<',
+	'&gt;' : '>',
+    '&quot;' :'"',
+    '&#039;' : "'"
+  };
+
+  return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+}

@@ -1,0 +1,198 @@
+/* START OF TABLE DESIGNS */
+
+	th > a:after {
+		content: " \f0dc";
+		font-family: FontAwesome;
+		color: $777A7C;
+	}
+
+	th > a.asc:after {
+		content: " \f0dd";
+		font-family: FontAwesome;
+		color: #A94442;
+	}
+
+	th > a.desc:after {
+		content: " \f0de";
+		font-family: FontAwesome;
+		color: #31708F;
+	}
+
+	.table th a {
+		color: #777A7C;
+	}
+
+	.table td a {
+		color: #676a6c;
+	}
+	
+	.table td {
+		word-break: break-all !important;
+	}
+
+/* END OF TABLE DESIGNS */
+
+/* START OF ICON DESIGNS */
+
+	.xs-icon {
+		font-size: 15px !important;
+	}
+
+	.sm-icon {
+		font-size: 20px !important;
+	}
+
+	.md-icon {
+		font-size: 30px !important;
+	}
+
+	.lg-icon {
+		font-size: 70px !important;
+	}
+
+	.icon-padding {
+		padding-left: 3px;
+		padding-right: 3px;
+	}
+
+	.blue-link, .blue-link:visited {
+		color: #22b392 !important;
+		text-decoration: none;
+	}
+
+	.blue-link:hover, .blue-link:active {
+		color: #1d9378 !important;
+		text-decoration: none;
+	}
+
+	.gray-link, .gray-link:visited {
+		color: #bebebe !important;
+		text-decoration: none;
+	}
+
+	.gray-link:hover, .gray-link:active {
+		color: #929292 !important;
+		text-decoration: none;
+	}
+
+	.yellow-link, .yellow-link:visited {
+		color: #f7c808 !important;
+		text-decoration: none;
+	}
+
+	.yellow-link:hover, .yellow-link:active {
+		color: #ffce0a !important;
+		text-decoration: none;
+	}
+
+	.red-link, .red-link:visited {
+		color: #e24e32 !important;
+		text-decoration: none;
+	}
+
+/* END OF ICON DESIGNS */
+
+/* START OF BUTTON DESIGNS */
+
+	.form-group > div > .btn {
+		min-width: 130px;
+		margin-left: 3px;
+		margin-right: 3px;
+	}
+
+/* END OF BUTTON DESIGNS */
+
+/* START OF ADD PLUGIN DESIGN */
+
+	.wipe-right-padding {
+		padding: 0px 0px 0px 15px;
+	}
+
+	.wipe-left-padding {
+		padding:0px 15px 0px 0px; 
+	}
+
+	.btn-right-round {
+		border-top-left-radius: 0px;
+		border-bottom-left-radius: 0px;
+		border-top-right-radius: 4px;
+		border-bottom-right-radius: 4px;
+	}
+
+	@media (max-width: 768px){
+		
+		.wipe-right-padding {
+			padding-right: 15px;
+			padding-left: 15px;
+		}
+
+		.wipe-left-padding {
+			padding-right: 15px;
+			padding-left: 15px;
+		}
+
+		.btn-right-round {
+			border-radius: 4px;
+		}
+		
+	}
+
+/* END OF ADD PLUGIN DESIGN */
+
+/* START OF SIDEBAR NAVIGATION DESIGN */
+	.btn-sidebar-close {
+		float:right; 
+		font-size: 25px; 
+		padding: 5px;
+	}
+	
+	.nav.metismenu li:not(.nav-header) li {
+		margin-left: 15px;
+	}
+	
+	.nav > li.active {
+		border-left: 3px solid #19aa8d;
+	}
+
+/* END OF SIDEBAR NAVIGATION DESIGN */
+
+/* START OF MODAL ADJUSTMENTS */
+	.modal-footer .btn+.btn {
+		margin-bottom: 5px; 
+		margin-left: 5px;
+	}
+	
+	.no-padding-right {
+		padding-right: 0px;
+	}
+
+	.no-padding-left {
+		padding-left: 0px;
+	}
+
+	@media (max-width: 992px) {
+		.control-label-correction {
+			text-align: left !important;
+		}
+	}
+/* END OF MODAL ADJUSTMENTS */
+
+/* START OF CAKE ERROR STYLE */
+	.error-message {
+		padding-top: 3px;
+		color: red;
+	}
+	
+	.error-message:before {
+		content: "\f06a   ";
+		font-family: FontAwesome;
+		color: red;
+	}
+/* END OF CAKE ERROR STYLE */
+
+@media (max-width: 400px){
+	.btn-sidebar-close {
+		position: relative;
+		left: -160px !important;
+	}
+}
