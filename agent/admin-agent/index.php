@@ -1,4 +1,5 @@
 <?php
+//push
 session_start();
 include "../../connections/database.php";  
 // If the user is not logged in redirect to the login page...
