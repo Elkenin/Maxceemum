@@ -47,7 +47,7 @@ if (!isset($_SESSION['loggedin']))
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../css/sbadmin-2.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -74,7 +74,10 @@ if (!isset($_SESSION['loggedin']))
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+        <div class="profile">
+                <!--Profile Image-->
+                <img src="../../img/icon.png" alt="Refrubished Employee Icon - Admin Assets Upload Id@nicepng.com" class="center">
+            </div>
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../">
                 <div class="sidebar-brand-icon rotate-n-15">
@@ -137,7 +140,7 @@ if (!isset($_SESSION['loggedin']))
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                     aria-expanded="true" aria-controls="collapseOne">
-                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    <i class="fas fa-fw fa-clipboard-list"></i>
 
                     <span>Reports</span>
                 </a>
@@ -152,6 +155,23 @@ if (!isset($_SESSION['loggedin']))
                     </div>
                 </div>
             </li>
+
+             <!-- Nav Item - Settings Collapse Menu -->
+             <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="true" aria-controls="collapseTwo">
+                            <i style="font-size:15px" class="fa">&#xf013;</i>
+        
+                            <span>Settings</span>
+                        </a>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="../../settings">Registration</a> 
+                                <a class="collapse-item" href="..">Commission and Plan</a> 
+                                                 
+                            </div>
+                        </div>
+                    </li>
 
             <!-- Nav Item - Logout Collapse Menu -->
             <li class="nav-item">
@@ -249,7 +269,7 @@ if (!isset($_SESSION['loggedin']))
         
         }
         ?>
-
+<div class="form-shadow">
 <div class="form-row">
     <div class="form-group col-md-4">
       <b><label for="mID">Collector ID</label></b>
@@ -417,7 +437,7 @@ if (!isset($_SESSION['loggedin']))
      <input type="text" style="opacity:0;" readonly id="newbarangay" name="barangay" placeholder="barangay" class="form-control">
         </div>
 </section><br>
-
+</div>
 <section class="text-center">
   <button class="btn btn-primary" type="Reset">Reset</button>
   <button class="btn btn-primary" name="collector" type="Submit">Submit</button>

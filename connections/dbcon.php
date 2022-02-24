@@ -1,7 +1,7 @@
 <?php
 
 //                          localhost       username            password        dbname
-$con = mysqli_connect('localhost', 'root', '', 'ffpi');
+$con = mysqli_connect('localhost', 'root', '', 'maxi');
 
 if (!$con) {
 

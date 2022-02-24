@@ -1,8 +1,8 @@
 <?php
 
-$db = mysqli_connect('localhost', 'root', '', 'ffpi');
+$db = mysqli_connect('localhost', 'root', '', 'maxi');
 
-$con = mysqli_connect('localhost', 'root', '', 'ffpi');
+$con = mysqli_connect('localhost', 'root', '', 'maxi');
 
 $errors = array(); 
 $good = array();
@@ -65,7 +65,7 @@ if (isset($_POST['paybutton']))
 
   /*<!--=================  Collector Registration Form  =================--*/
 
-  if (isset($_POST['collector'])) 
+  if (isset($_POST['collector_submit'])) 
   {
         $username = $_SESSION['username'];
         $collector_id = mysqli_real_escape_string($db, $_POST['collector_id']);
@@ -110,22 +110,5 @@ if (isset($_POST['paybutton']))
           array_push($successresponse, "Congratulations! Collector is now Registered!
           CollectorID: $collector_id");
         }
-          /*<!--=================  Agent Submit Information  =================--*/
-        if (isset($_POST['agent_submit'])) 
-          {
-    
-            $agent_id = mysqli_real_escape_string($db, $_POST['memberid']);
-            $agent_id = substr($agent_id, 6, strlen($agent_id));
-            echo $agent_id;
-   
-            $fullname = mysqli_real_escape_string($db, $_POST['lastname']) . ", " . mysqli_real_escape_string($db, $_POST['firstname']) . " " . mysqli_real_escape_string($db, $_POST['middlename']);
-            $position = mysqli_real_escape_string($db, $_POST['Position']);
-            $email = mysqli_real_escape_string($db, $_POST['Email']);
-
-
-            $query = "INSERT INTO agents (agent_id, fullname, position, email) VALUES ('$agent_id', '$fullname','$position', '$email')";
-            $process = mysqli_query($con, $query);
-            array_push($successresponse, "Congratulations! Agent is now Registered! Agent: $agent_id");
-          }
-}
+  }
   

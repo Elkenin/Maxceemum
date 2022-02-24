@@ -1,5 +1,4 @@
 <?php
-//push
 session_start();
 include "../../connections/database.php";  
 // If the user is not logged in redirect to the login page...
@@ -47,7 +46,7 @@ if (!isset($_SESSION['loggedin']))
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../css/sbadmin-2.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -74,7 +73,10 @@ if (!isset($_SESSION['loggedin']))
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-        <img class="img-profile rounded-circle" src="../../img/undraw_profile.svg">
+        <div class="profile">
+                <!--Profile Image-->
+                <img src="../../img/icon.png" alt="Refrubished Employee Icon - Admin Assets Upload Id@nicepng.com" class="center">
+            </div>
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../">
                 <div class="sidebar-brand-icon rotate-n-15">
@@ -88,7 +90,7 @@ if (!isset($_SESSION['loggedin']))
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="../dashboard">
+                <a class="nav-link" href="../../dashboard">
                     <i class="fas fa-fw fa-home"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -137,8 +139,7 @@ if (!isset($_SESSION['loggedin']))
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                     aria-expanded="true" aria-controls="collapseOne">
-                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-
+                    <i class="fas fa-fw fa-clipboard-list"></i>
                     <span>Reports</span>
                 </a>
                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
@@ -152,6 +153,22 @@ if (!isset($_SESSION['loggedin']))
                     </div>
                 </div>
             </li>
+            <!-- Nav Item - Settings Collapse Menu -->
+            <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="true" aria-controls="collapseTwo">
+                            <i style="font-size:15px" class="fa">&#xf013;</i>
+        
+                            <span>Settings</span>
+                        </a>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="../../settings">Registration</a> 
+                                <a class="collapse-item" href="..">Commission and Plan</a> 
+                                                 
+                            </div>
+                        </div>
+                    </li>
 
             <!-- Nav Item - Logout Collapse Menu -->
             <li class="nav-item">
@@ -165,7 +182,7 @@ if (!isset($_SESSION['loggedin']))
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+               <center> <button class="rounded-circle border-0" id="sidebarToggle"></button></center>
             </div>           
 
         </ul>
@@ -209,13 +226,13 @@ if (!isset($_SESSION['loggedin']))
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
 
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="../dashboard/" id="userDropdown" role="button"
+                       <!-- Nav Item - User Information -->
+                       <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="../../dashboard/" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle"
-                                    src="../img/undraw_profile.svg">
+                                    src="../../img/undraw_profile.svg">
                             </a>
                         </li>
 
@@ -239,18 +256,19 @@ if (!isset($_SESSION['loggedin']))
 <section>
 
 <?php
-    $generateID = "FFPI-A20000";
-    // <!-- ================= GENERATE NEW ID ================== -->
-    $checkID = mysqli_query($con,"select * from agents");
-    while($check = mysqli_fetch_array($checkID))
-    {
-        $userID = $check['agent_id'];
-        $existingID = substr($userID,6);
-        $addone = $existingID+1;
-        $generateID = "FFPI-A".$addone;
-    }
-?>
-
+        $generateID = "FFPI-A20000"
+        /*<!-- ================= GENERATE NEW ID ================== -->
+        $checkID = mysqli_query($con,"select * from agents");
+        while($check = mysqli_fetch_array($checkID))
+        {
+          $userID = $check['agent-id'];
+          $existingID=substr($userID,6);
+          $addone = $existingID+1;
+          $generateID = "FFPI-A".$addone;
+        
+        }*/
+        ?>
+<div class="form-shadow">
 <div class="form-row">
     <div class="form-group col-md-4">
       <b><label for="mID">Agent ID</label></b>
@@ -262,6 +280,7 @@ if (!isset($_SESSION['loggedin']))
     <b><label for="cs">Type of Agent</label></b>
       <select id="tyAgent" name="typeofagent" list="typeofagent" class="form-control">
       <datalist id="typeofagent">
+          
           <?php
           $getstatus = mysqli_query($con,"select * from type_of_agent_list");
           if($getstatus) 
@@ -273,25 +292,31 @@ if (!isset($_SESSION['loggedin']))
                 }
           }
           ?>
+          <option selected>Choose...</option>
+        <option>...</option>
       </select>
   </div>
 
-    <div class="form-group col-md-2">
-        <b><label for="branch">Branch</label></b>
-        <select id="branch" class="form-control">
-        <datalist id="typeofbranch">  <?php
-            $getstatus = mysqli_query($con,"select * from branch");
-            if($getstatus) 
-            {
+ <div class="form-group col-md-2">
+    <b><label for="branch">Branch</label></b>
+      <select id="branch" class="form-control">
+          <datalist id= "typeofbranch">  
+              <?php
+          $getstatus = mysqli_query($con,"select * from branch");
+          if($getstatus) 
+          {
                 while($checkstatus = mysqli_fetch_array($getstatus))
                 {
                   $showall = $checkstatus['branch'];
                   echo"<option>$showall</option>";
                 }
-            }
-            ?>
-        </select>
-    </div>
+          }
+          ?>
+
+        <option selected>Choose...</option>
+        <option>...</option>
+      </select>
+  </div>
 
        <div class="form-group col-md-4">
      <b><label for="doa">Date of Application</label></b>
@@ -331,6 +356,7 @@ if (!isset($_SESSION['loggedin']))
     <div class="form-group col-md-2">                  
                     <b><label for="province">Province</label></b>
                     <select id="province" class="form-control">
+                        
                     <option>Choose...</option>
                     <option <? ($temp == $value) ? "SELECTED" : "" ?> ></opton>
                     </select>
@@ -424,11 +450,10 @@ if (!isset($_SESSION['loggedin']))
      </div>
   </div>
 </section><br>
-
+</div>
 <section class="text-center">
   <button class="btn btn-primary" type="Reset">Reset</button>
   <button class="btn btn-primary" type="Submit">Submit</button>
-  
 </section>
 </section>
 </div>

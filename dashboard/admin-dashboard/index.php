@@ -20,23 +20,6 @@ if (!isset($_SESSION['loggedin']))
     }
     $yusername = $_SESSION['username'];
     $getuser = mysqli_query($con,"select * from accounts where username = '$yusername'");
-    //---Count Collectors
-    $result = mysqli_query($con, "SELECT COUNT(*) AS total FROM collectors"); 
-    $values = mysqli_fetch_assoc($result); 
-    $num_rows = $values['total']; 
-    //---Count agents
-    $result1 = mysqli_query($con, "SELECT COUNT(*) AS total FROM agents"); 
-    $values1 = mysqli_fetch_assoc($result1); 
-    $num_rows1 = $values1['total']; 
-    //---Count planholders
-    $result2 = mysqli_query($con, "SELECT COUNT(*) AS total FROM planholders"); 
-    $values2 = mysqli_fetch_assoc($result2); 
-    $num_rows2 = $values2['total']; 
-    //---Count staff
-    $result3 = mysqli_query($con, "SELECT COUNT(*) AS total FROM accounts where position = 'staff'"); 
-    $values3 = mysqli_fetch_assoc($result3); 
-    $num_rows3 = $values3['total']; 
-    
     $user = mysqli_fetch_array($getuser);
     // assigning variable to show
     $authority = $user['position'];
@@ -60,7 +43,7 @@ if (!isset($_SESSION['loggedin']))
             <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
         
             <!-- Custom styles for this template-->
-            <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
+            <link href="../../css/sbadmin-2.css" rel="stylesheet">
             <!-- Custom styles for this template -->
         
             <!-- Custom styles for this template -->
@@ -86,7 +69,11 @@ if (!isset($_SESSION['loggedin']))
         
                 <!-- Sidebar -->
                 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-        
+                <div class="sidebar">
+                <div class="profile">
+                <!--Profile Image-->
+                <img src="../../img/icon.png" alt="Refrubished Employee Icon - Admin Assets Upload Id@nicepng.com" class="center">
+            </div>
                     <!-- Sidebar - Brand -->
                     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../">
                         <div class="sidebar-brand-icon rotate-n-15">
@@ -149,7 +136,7 @@ if (!isset($_SESSION['loggedin']))
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
                             aria-expanded="true" aria-controls="collapseOne">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            <i class="fas fa-fw fa-clipboard-list"></i>
         
                             <span>Reports</span>
                         </a>
@@ -164,7 +151,22 @@ if (!isset($_SESSION['loggedin']))
                             </div>
                         </div>
                     </li>
+          <!-- Nav Item - Settings Collapse Menu -->
+          <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="true" aria-controls="collapseTwo">
+                            <i style="font-size:15px" class="fa">&#xf013;</i>
         
+                            <span>Settings</span>
+                        </a>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="../../settings">Registration</a> 
+                                <a class="collapse-item" href="..">Commission and Plan</a> 
+                                                 
+                            </div>
+                        </div>
+                    </li>
                     <!-- Nav Item - Logout Collapse Menu -->
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="../../logout.php">
@@ -177,7 +179,7 @@ if (!isset($_SESSION['loggedin']))
         
                     <!-- Sidebar Toggler (Sidebar) -->
                     <div class="text-center d-none d-md-inline">
-                        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                        <center><button class="rounded-circle border-0" id="sidebarToggle"></button></center>
                     </div>           
         
                 </ul>
@@ -222,15 +224,15 @@ if (!isset($_SESSION['loggedin']))
                                         <i class="fas fa-search fa-fw"></i>
                                     </a>
         
-                                <!-- Nav Item - User Information -->
-                                <li class="nav-item dropdown no-arrow">
-                                    <a class="nav-link dropdown-toggle" href="../" id="userDropdown" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
-                                        <img class="img-profile rounded-circle"
-                                            src="../../img/undraw_profile.svg">
-                                    </a>
-                                </li>
+                               <!-- Nav Item - User Information -->
+                       <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="../../dashboard/" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                                <img class="img-profile rounded-circle"
+                                    src="../../img/undraw_profile.svg">
+                            </a>
+                        </li>
         
                             </ul>
                         </nav>
@@ -257,7 +259,7 @@ if (!isset($_SESSION['loggedin']))
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                         Agents</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $num_rows1 ?></div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -275,7 +277,7 @@ if (!isset($_SESSION['loggedin']))
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                         Collectors</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo $num_rows ?> </div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -295,7 +297,7 @@ if (!isset($_SESSION['loggedin']))
                                                     </div>
                                                     <div class="row no-gutters align-items-center">
                                                         <div class="col-auto">
-                                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $num_rows2 ?></div>
+                                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">200</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -315,7 +317,7 @@ if (!isset($_SESSION['loggedin']))
                                                 <div class="col mr-2">
                                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                         Staffs</div>
-                                                    <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $num_rows3 ?></div>
+                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="fas fa-comments fa-2x text-gray-300"></i>

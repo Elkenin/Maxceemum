@@ -17,12 +17,14 @@ if (!isset($_SESSION['loggedin']))
 		    else 
         {
             $_SESSION['last_login_time'] = time();
+    		}
+    }
     $yusername = $_SESSION['username'];
     $getuser = mysqli_query($con,"select * from accounts where username = '$yusername'");
     $user = mysqli_fetch_array($getuser);
     // assigning variable to show
     $authority = $user['position'];
-    if($authority == "admin")
+    if($authority == "staff")
     {?>
         <!DOCTYPE html>
         <html lang="en">
@@ -44,7 +46,7 @@ if (!isset($_SESSION['loggedin']))
                 rel="stylesheet">
         
             <!-- Custom styles for this template-->
-            <link href="../../css/sbadmin-2.css" rel="stylesheet">
+            <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
         
             <!-- Custom styles for this template -->
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -69,11 +71,7 @@ if (!isset($_SESSION['loggedin']))
         
                 <!-- Sidebar -->
                 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-                <div class="sidebar">
-                <div class="profile">
-                <!--Profile Image-->
-                <img src="../../img/icon.png" alt="Refrubished Employee Icon - Admin Assets Upload Id@nicepng.com" class="center">
-            </div>
+        
                     <!-- Sidebar - Brand -->
                     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../">
                         <div class="sidebar-brand-icon rotate-n-15">
@@ -131,43 +129,6 @@ if (!isset($_SESSION['loggedin']))
                             <span>Payment</span>
                         </a>
                     </li>
-        
-                    <!-- Nav Item - Reports Collapse Menu -->
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
-                            aria-expanded="true" aria-controls="collapseOne">
-                            <i class="fas fa-fw fa-clipboard-list"></i>
-        
-                            <span>Reports</span>
-                        </a>
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="..">Planholder Report</a> 
-                                <a class="collapse-item" href="..">Agent Report</a> 
-                                <a class="collapse-item" href="..">Payment Report</a> 
-                                <a class="collapse-item" href="..">Commission Report</a> 
-                                <a class="collapse-item" href="..">Collection Report</a>
-                                <a class="collapse-item" href="..">Payout Report</a>                  
-                            </div>
-                        </div>
-                    </li>
-                   <!-- Nav Item - Settings Collapse Menu -->
-                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                            aria-expanded="true" aria-controls="collapseTwo">
-                            <i style="font-size:15px" class="fa">&#xf013;</i>
-        
-                            <span>Settings</span>
-                        </a>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="../../settings">Registration</a> 
-                                <a class="collapse-item" href="..">Commission and Plan</a> 
-                                                 
-                            </div>
-                        </div>
-                    </li>
-        
                     <!-- Nav Item - Logout Collapse Menu -->
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="../../logout.php">
@@ -180,7 +141,7 @@ if (!isset($_SESSION['loggedin']))
         
                     <!-- Sidebar Toggler (Sidebar) -->
                     <div class="text-center d-none d-md-inline">
-                        <center><button class="rounded-circle border-0" id="sidebarToggle"></button></center>
+                        <button class="rounded-circle border-0" id="sidebarToggle"></button>
                     </div>           
         
                 </ul>
@@ -257,7 +218,6 @@ if (!isset($_SESSION['loggedin']))
                 <input type="text" style="width:0px;height:0px;opacity:0;" id="newbarangay" readonly name="newbarangay"> 
         <div id="print">
         <section>
-        <div class="form-shadow">
         <div class="form-row">
         <div class="form-group col-md-3">
               <b><label for="pcn"> Policy Contract No.</label></b>
@@ -413,15 +373,14 @@ if (!isset($_SESSION['loggedin']))
         <input type="text" class="form-control"­ id="weight" name="weight">
         </div>
         </div>
-        </div>
+        
         </section>
         
-        <hr class="my-7">
+        <hr class="my-6">
         <section> <br>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Beneficiaries</h1>
                 </div>
-                <div class="form-shadow">
         <div class="form">
             <b><label for="primary"><i>Primary</i></label></b>
           </div>
@@ -476,12 +435,12 @@ if (!isset($_SESSION['loggedin']))
         </div>
         </section>
         
-        <hr class="my-7">
+        <hr class="my-6">
         <section> <br>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
           <h1 class="h3 mb-0 text-gray-800">Sales Agent Information</h1>
                 </div>
-       <div class="form-shadow">
+        
         <div class="form-row">
           <div class="form-group col-md-3" id="">
             <b><label for="agent">Agent ID</label></b>
@@ -515,12 +474,12 @@ if (!isset($_SESSION['loggedin']))
         </div>
         </section>
         
-        <hr class="my-7">
+        <hr class="my-6">
         <section> <br>
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Plan Type</h1>
                 </div>
-      <div class="form-shadow">
+        
         <div class="form-row">
           <div class="form-group col-md-4">
             <b><label for="pt">Plan Type</label></b>
@@ -581,10 +540,8 @@ if (!isset($_SESSION['loggedin']))
         </div>
         </section>
         
-        <hr class="my-7">
+        <hr class="my-6">
         <section> <br>
-
-        <div class="form-shadow">
         <h4><b>Declaration of Health Status</b></h4>
         
         <div> I herby declare that I am free from any harmful and dreaded diseases like:</div>
@@ -774,11 +731,11 @@ if (!isset($_SESSION['loggedin']))
         <div>&nbsp <i>The following, among others, when occurring during the first year of the coverage after the effective date, are considered Pre-Existing.</i></div>
         
         </div>
-     </div>
+        
         </div>
         </section>
         
-        <section class="text-center"><br>
+        <section class="text-center">
           <button class="btn btn-primary" type="Reset">Reset</button>
           <button class="btn btn-primary"name="submit">Submit</button> 
         
@@ -823,8 +780,6 @@ if (!isset($_SESSION['loggedin']))
         </body>
         </html>
     <?php 
-    }
-    }
     }
     else
       header('location: ../../logout.php');
